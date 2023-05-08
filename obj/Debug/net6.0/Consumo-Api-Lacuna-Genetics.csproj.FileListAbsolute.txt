@@ -1,0 +1,17 @@
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\bin\Debug\net6.0\Consumo-Api-Lacuna-Genetics.exe
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\bin\Debug\net6.0\Consumo-Api-Lacuna-Genetics.deps.json
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\bin\Debug\net6.0\Consumo-Api-Lacuna-Genetics.runtimeconfig.json
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\bin\Debug\net6.0\Consumo-Api-Lacuna-Genetics.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\bin\Debug\net6.0\Consumo-Api-Lacuna-Genetics.pdb
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\Consumo-Api-Lacuna-Genetics.csproj.AssemblyReference.cache
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\Consumo-Api-Lacuna-Genetics.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\Consumo-Api-Lacuna-Genetics.AssemblyInfoInputs.cache
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\Consumo-Api-Lacuna-Genetics.AssemblyInfo.cs
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\Consumo-Api-Lacuna-Genetics.csproj.CoreCompileInputs.cache
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\Consumo-Api-Lacuna-Genetics.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\refint\Consumo-Api-Lacuna-Genetics.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\Consumo-Api-Lacuna-Genetics.pdb
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\Consumo-Api-Lacuna-Genetics.genruntimeconfig.cache
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\ref\Consumo-Api-Lacuna-Genetics.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Conusmo Api\Consumo-Api-Lacuna-Genetics\obj\Debug\net6.0\Consumo-Api-Lacuna-Genetics.csproj.CopyComplete
