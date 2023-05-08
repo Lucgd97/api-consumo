@@ -19,7 +19,7 @@ namespace Consumo_Api_Lacuna_Genetics
             using var client = new HttpClient { BaseAddress = baseAddress };
 
             // Informações do usuário criado anteriormente
-            var username = "LucasGDucci";
+            var username = "Danilo12345";
             var email = "lucas@email.com";
             var password = "lucas123456";
 
@@ -86,17 +86,9 @@ namespace Consumo_Api_Lacuna_Genetics
             Console.WriteLine($"Binary sequence: {BitConverter.ToString(binarySequence)}");
             Console.WriteLine($"Encoded string: {encodedString}");
 
-            // Fazer a solicitação para um novo trabalho
-            var jobRequest = new JobRequest
-            {
-                Type = "EncodeStrand",
-                Data = dnaSequence
-            };
+            
 
-            var jobRequestJson = JsonConvert.SerializeObject(jobRequest);
-            var jobRequestContent = new StringContent(jobRequestJson, Encoding.UTF8, "application/json");
-
-            var jobResponse = await client.PostAsync("api/dna/jobs", jobRequestContent);
+            var jobResponse = await client.GetAsync($"api/dna/jobs?type=EncodeStrand&Data={dnaSequence}");
 
             try
             {
@@ -122,10 +114,6 @@ namespace Consumo_Api_Lacuna_Genetics
             var geneSequence = "TACCGCTTCATAAACCGCTAGACTGCATGATCGGG";
             await CheckGene(client, jobId, geneSequence);
         }
-
-
-
-
         private static async Task CheckGene(HttpClient client, string jobId, string geneSequence)
         {
             var jobGeneUrl = $"api/dna/jobs/{jobId}/gene";
