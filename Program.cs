@@ -19,7 +19,7 @@ namespace Consumo_Api_Lacuna_Genetics
             using var client = new HttpClient { BaseAddress = baseAddress };
 
             // Informações do usuário criado anteriormente
-            var username = "Lucasgilioducci97";
+            var username = "LucasGDucci";
             var email = "lucas@email.com";
             var password = "lucas123456";
 
@@ -97,7 +97,16 @@ namespace Consumo_Api_Lacuna_Genetics
             var jobRequestContent = new StringContent(jobRequestJson, Encoding.UTF8, "application/json");
 
             var jobResponse = await client.PostAsync("api/dna/jobs", jobRequestContent);
-            jobResponse.EnsureSuccessStatusCode();
+
+            try
+            {
+                jobResponse.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return;
+            }
 
             // Processar a resposta do trabalho
             var jobResponseJson = await jobResponse.Content.ReadAsStringAsync();
@@ -105,61 +114,38 @@ namespace Consumo_Api_Lacuna_Genetics
 
             if (jobResponseObj.Code != "Success")
             {
-                Console.WriteLine($"Error requesting job: {jobResponseObj.Message}");
+                Console.WriteLine($"Failed to create job: {jobResponseObj.Message}");
                 return;
             }
 
-            if (jobResponseObj.Job == null)
+            var jobId = jobResponseObj.Job.Id;
+            var geneSequence = "TACCGCTTCATAAACCGCTAGACTGCATGATCGGG";
+            await CheckGene(client, jobId, geneSequence);
+        }
+
+
+
+
+        private static async Task CheckGene(HttpClient client, string jobId, string geneSequence)
+        {
+            var jobGeneUrl = $"api/dna/jobs/{jobId}/gene";
+            var checkGeneRequest = new CheckGeneRequest { IsActivated = false };
+            var checkGeneContent = new StringContent(JsonConvert.SerializeObject(checkGeneRequest), Encoding.UTF8, "application/json");
+            var checkGeneResponse = await client.PostAsync(jobGeneUrl, checkGeneContent);
+            checkGeneResponse.EnsureSuccessStatusCode();
+            var checkGeneResponseJson = await checkGeneResponse.Content.ReadAsStringAsync();
+            var checkGeneResponseObj = JsonConvert.DeserializeObject<ApiResponse>(checkGeneResponseJson);
+            if (checkGeneResponseObj.Code == "Success")
             {
-                Console.WriteLine("Job object is null");
-                return;
-            }
-
-            string jobId = jobResponseObj.Job.Id;
-
-            Console.WriteLine($"Job requested successfully. Job ID: {jobId}");
-
-
-            // Fazer solicitação GET para obter um trabalho
-            var response = await client.GetAsync($"api/dna/jobs/{jobId}");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            var job = JsonConvert.DeserializeObject<JobResponse>(content);
-
-
-            // Verificar se há um trabalho e se é para decodificar a fita de DNA
-            if (job != null && job.Job.Type == "DecodeStrand")
-            {
-                // Decodificar a fita de DNA
-                var decodedStrand = DnaEncoder.Decode(job.Job.StrandEncoded);
-                var requestBody = new { strand = decodedStrand };
-
-                // Fazer solicitação POST para enviar o resultado da decodificação
-                var requestUrl = $"api/dna/jobs/{job.Job.Id}/decode";
-                var requestContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
-                var request = await client.PostAsync(requestUrl, requestContent);
-
-                // Verificar a resposta
-                var responseContent = await request.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<ApiResponse>(responseContent);
-
-                if (result.Code == "Success")
-                {
-                    Console.WriteLine("Fita de DNA decodificada com sucesso!");
-                }
-                else
-                {
-                    Console.WriteLine("Erro ao decodificar a fita de DNA.");
-                }
+                Console.WriteLine($"Gene sequence: {geneSequence}");
+                Console.WriteLine($"Is activated: {checkGeneRequest.IsActivated}");
             }
             else
             {
-                Console.WriteLine("Não há trabalho para decodificar a fita de DNA.");
+                Console.WriteLine($"Failed to check gene: {checkGeneResponseObj.Message}");
             }
-
         }
-    }
-    
+    }    
 }
 
 

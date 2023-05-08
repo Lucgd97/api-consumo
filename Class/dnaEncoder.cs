@@ -90,4 +90,5 @@ namespace Consumo_Api_Lacuna_Genetics.Class
             return decodedString;
         }
     }
+}
 
