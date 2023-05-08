@@ -86,51 +86,40 @@ namespace Consumo_Api_Lacuna_Genetics
             Console.WriteLine($"Binary sequence: {BitConverter.ToString(binarySequence)}");
             Console.WriteLine($"Encoded string: {encodedString}");
 
-            
 
-            var jobResponse = await client.GetAsync($"api/dna/jobs?type=EncodeStrand&Data={dnaSequence}");
+            //get 5.1
+            // Decode strand
+            string endpoint = "api/dna/jobs";
+            HttpResponseMessage response = await client.GetAsync(endpoint);
 
-            try
+            if (response.IsSuccessStatusCode)
             {
-                jobResponse.EnsureSuccessStatusCode();
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return;
-            }
+                string responseBody = await response.Content.ReadAsStringAsync();
 
-            // Processar a resposta do trabalho
-            var jobResponseJson = await jobResponse.Content.ReadAsStringAsync();
-            var jobResponseObj = JsonConvert.DeserializeObject<JobResponse>(jobResponseJson);
+                dynamic responseObject = JsonConvert.DeserializeObject(responseBody);
 
-            if (jobResponseObj.Code != "Success")
-            {
-                Console.WriteLine($"Failed to create job: {jobResponseObj.Message}");
-                return;
-            }
+                string jobId = responseObject.job.id;
+                string jobType = responseObject.job.type;
+                string strand = responseObject.job.strand;
+                string strandEncoded = responseObject.job.strandEncoded;
+                string geneEncoded = responseObject.job.geneEncoded;
 
-            var jobId = jobResponseObj.Job.Id;
-            var geneSequence = "TACCGCTTCATAAACCGCTAGACTGCATGATCGGG";
-            await CheckGene(client, jobId, geneSequence);
-        }
-        private static async Task CheckGene(HttpClient client, string jobId, string geneSequence)
-        {
-            var jobGeneUrl = $"api/dna/jobs/{jobId}/gene";
-            var checkGeneRequest = new CheckGeneRequest { IsActivated = false };
-            var checkGeneContent = new StringContent(JsonConvert.SerializeObject(checkGeneRequest), Encoding.UTF8, "application/json");
-            var checkGeneResponse = await client.PostAsync(jobGeneUrl, checkGeneContent);
-            checkGeneResponse.EnsureSuccessStatusCode();
-            var checkGeneResponseJson = await checkGeneResponse.Content.ReadAsStringAsync();
-            var checkGeneResponseObj = JsonConvert.DeserializeObject<ApiResponse>(checkGeneResponseJson);
-            if (checkGeneResponseObj.Code == "Success")
-            {
-                Console.WriteLine($"Gene sequence: {geneSequence}");
-                Console.WriteLine($"Is activated: {checkGeneRequest.IsActivated}");
+                Console.WriteLine($"Job ID: {jobId}");
+                Console.WriteLine($"Job Type: {jobType}");
+                Console.WriteLine($"Strand: {strand}");
+                Console.WriteLine($"Strand Encoded: {strandEncoded}");
+                Console.WriteLine($"Gene Encoded: {geneEncoded}");
             }
             else
             {
-                Console.WriteLine($"Failed to check gene: {checkGeneResponseObj.Message}");
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                dynamic responseObject = JsonConvert.DeserializeObject(responseBody);
+
+                string code = responseObject.code;
+                string message = responseObject.message;
+
+                Console.WriteLine($"Error: {code}, Message: {message}");
             }
         }
     }    
