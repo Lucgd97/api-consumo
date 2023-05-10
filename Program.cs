@@ -15,7 +15,7 @@ namespace Consumo_Api_Lacuna_Genetics
         static async Task Main(string[] args)
         {
             // Informações do usuário criado anteriormente
-            var username = "Danilo12345";
+            var username = "Cris123";
             var email = "lucas@email.com";
             var password = "lucas123456";
 
@@ -28,18 +28,19 @@ namespace Consumo_Api_Lacuna_Genetics
             var loginResponseObj = await Login(username, password);
             if (loginResponseObj == null)
                 return;
-            
+
             // Obter um job
             var jobResponseObj = await GetJob(loginResponseObj.AccessToken);
             if (jobResponseObj == null)
                 return;
+
 
             // Realiza o Job conforme seu tipo
             switch (jobResponseObj.Job.Type)
             {
                 case "CheckGene":
                     {
-                        //await CheckGene(loginResponseObj.AccessToken, jobResponseObj);
+                        await CheckGene(loginResponseObj.AccessToken, jobResponseObj);
                         break;
                     }
                 case "DecodeStrand":
@@ -55,67 +56,131 @@ namespace Consumo_Api_Lacuna_Genetics
                 default:
                     break;
             }
+                
 
             Console.WriteLine("*** Fim ***");
-
-            //// Adicionar o cabeçalho de autorização no cliente HTTP
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            //// Codificar a sequência de DNA
-            //var dnaSequence = "ATCGATCG"; // substitua pela sua sequência de nucleobases
-            //var encoder = new DnaEncoder(dnaSequence);
-            //var binarySequence = encoder.EncodeBinary();
-            //var encodedString = encoder.EncodeString();
-
-            //Console.WriteLine($"Binary sequence: {BitConverter.ToString(binarySequence)}");
-            //Console.WriteLine($"Encoded string: {encodedString}");
-
-            //var jobResponse = await client.GetAsync($"api/dna/jobs?type=EncodeStrand&Data={dnaSequence}");
-
-            //try
-            //{
-            //    jobResponse.EnsureSuccessStatusCode();
-            //}
-            //catch (HttpRequestException ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //    return;
-            //}
-
-            //// Processar a resposta do trabalho
-            //var jobResponseJson = await jobResponse.Content.ReadAsStringAsync();
-            //var jobResponseObj = JsonConvert.DeserializeObject<JobResponse>(jobResponseJson);
-
-            //if (jobResponseObj.Code != "Success")
-            //{
-            //    Console.WriteLine($"Failed to create job: {jobResponseObj.Message}");
-            //    return;
-            //}
-
-            //var jobId = jobResponseObj.Job.Id;
-            //var geneSequence = "TACCGCTTCATAAACCGCTAGACTGCATGATCGGG";
-            //await CheckGene(client, jobId, geneSequence);
         }
 
-        //private static async Task CheckGene(HttpClient client, string jobId, string geneSequence)
-        //{
-        //    var jobGeneUrl = $"api/dna/jobs/{jobId}/gene";
-        //    var checkGeneRequest = new CheckGeneRequest { IsActivated = false };
-        //    var checkGeneContent = new StringContent(JsonConvert.SerializeObject(checkGeneRequest), Encoding.UTF8, "application/json");
-        //    var checkGeneResponse = await client.PostAsync(jobGeneUrl, checkGeneContent);
-        //    checkGeneResponse.EnsureSuccessStatusCode();
-        //    var checkGeneResponseJson = await checkGeneResponse.Content.ReadAsStringAsync();
-        //    var checkGeneResponseObj = JsonConvert.DeserializeObject<ApiResponse>(checkGeneResponseJson);
-        //    if (checkGeneResponseObj.Code == "Success")
+        private static async Task CheckGene(HttpClient client, string jobId, string geneSequence)
+        {
+            var jobGeneUrl = $"api/dna/jobs/{jobId}/gene";
+            var checkGeneRequest = new CheckGeneRequest { IsActivated = false };
+            var checkGeneContent = new StringContent(JsonConvert.SerializeObject(checkGeneRequest), Encoding.UTF8, "application/json");
+            var checkGeneResponse = await client.PostAsync(jobGeneUrl, checkGeneContent);
+            checkGeneResponse.EnsureSuccessStatusCode();
+            var checkGeneResponseJson = await checkGeneResponse.Content.ReadAsStringAsync();
+            var checkGeneResponseObj = JsonConvert.DeserializeObject<ApiResponse>(checkGeneResponseJson);
+            if (checkGeneResponseObj.Code == "Success")
+            {
+                Console.WriteLine($"Gene sequence: {geneSequence}");
+                Console.WriteLine($"Is activated: {checkGeneRequest.IsActivated}");
+            }
+            else
+            {
+                Console.WriteLine($"Failed to check gene: {checkGeneResponseObj.Message}");
+            }
+        }
+
+
+
+        //private static bool Teste(string gene, string dnaTemplate)
+        //{           
+
+        //    // Verificar se a sequência começa com "CAT"
+        //    if (!dnaTemplate.StartsWith("CAT"))
         //    {
-        //        Console.WriteLine($"Gene sequence: {geneSequence}");
-        //        Console.WriteLine($"Is activated: {checkGeneRequest.IsActivated}");
+        //        // Inverter a sequência de DNA se ela começa com "GTA"
+        //        if (dnaTemplate.StartsWith("GTA"))
+        //        {
+        //            dnaTemplate = new string(dnaTemplate.Reverse().ToArray());
+        //        }
+        //        // Se a sequência não começa com "CAT" nem com "GTA", retornar false
+        //        else
+        //        {
+        //            return false;
+        //        }
         //    }
-        //    else
+
+        //    string dnaGene = "TACCGCTTCATAAACCGCTAGACTGCATGATCGGGT";
+        //    dnaTemplate = "CATCTCAGTCCTACTAAACTCGCGAAGCTCATACTAGCTACTAAACCGCTAGACTGCATGATCGCATAGCTAGCTACGCT";
+        //    bool result = Teste(dnaGene, dnaTemplate);
+        //    Console.WriteLine(result); // Deve imprimir True
+
+        //    // Criar uma expressão regular com o gene
+        //    string regexPattern = "(" + gene + "){1}";
+
+        //    // Encontrar todas as ocorrências do gene na sequência de DNA
+        //    MatchCollection matches = Regex.Matches(dnaTemplate, regexPattern);
+
+        //    // Calcular a porcentagem de ocorrências do gene em relação ao tamanho da sequência de DNA
+        //    double percentage = (double)(matches.Count * gene.Length) / dnaTemplate.Length * 100;
+
+        //    // Verificar se a porcentagem é maior do que 50%
+        //    return percentage > 50;
+
+
+        //public static bool IsGeneActivated(string gene, string dnaTemplate)
+        //{
+        //    // Inverte a fita complementar se a sequência começar com C-A-T
+        //    if (dnaTemplate.StartsWith("CAT"))
         //    {
-        //        Console.WriteLine($"Failed to check gene: {checkGeneResponseObj.Message}");
+        //        dnaTemplate = DnaConverter.InvertComplementary(dnaTemplate);
+        //    }
+
+        //    // Procura por uma sequência correspondente ao gene na fita modelo
+        //    var match = Regex.Match(dnaTemplate, @"[ACGT]{" + gene.Length + "}");
+
+        //    if (match.Success && match.Value == gene)
+        //    {
+        //        // Calcula a porcentagem de correspondência entre o gene e a fita modelo
+        //        float percentMatch = ((float)gene.Length / (float)dnaTemplate.Length) * 100;
+
+        //        // Verifica se a porcentagem de correspondência é maior que 50%
+        //        if (percentMatch > 50)
+        //        {
+        //            return true;
+        //        }
+        //    }
+
+        //    return false;
+        //}
+
+
+        //public async Task SendGeneActivationStatus(string jobId, bool isActivated, string accessToken)
+        //{
+        //    // Cria a URL da rota com o ID do trabalho
+        //    var url = $"api/dna/jobs/{jobId}/gene";
+
+        //    // Cria o corpo da solicitação
+        //    var requestData = new
+        //    {
+        //        isActivated = isActivated
+        //    };
+
+        //    // Cria um objeto HttpClient e adiciona o cabeçalho de autorização
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+        //        // Converte o corpo da solicitação em JSON e envia a solicitação POST
+        //        var json = JsonConvert.SerializeObject(requestData);
+        //        var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+
+        //        // Lê a resposta da API e verifica se a operação foi bem sucedida
+        //        var responseJson = await response.Content.ReadAsStringAsync();
+        //        dynamic responseObject = JsonConvert.DeserializeObject(responseJson);
+
+        //        if (responseObject.code == "Success")
+        //        {
+        //            Console.WriteLine("Gene activation status sent successfully.");
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Failed to send gene activation status: " + responseObject.message);
+        //        }
         //    }
         //}
+
 
         private static void Teste()
         {
@@ -133,25 +198,26 @@ namespace Consumo_Api_Lacuna_Genetics
             Console.WriteLine(gene);
             Console.WriteLine(strand);
 
-            //TAAACCGCTAGACTGCATGATCG (len=23) ==> 63,89%
-            //TACCGCTTCATAAACCGCTAGACTGCATGATCGGGT (len=36)
-
-            var dnaGene = "TACCGCTTCATAAACCGCTAGACTGCATGATCGGGT";
+            var dnaGene = "TAAACCGCTAGACTGCATGATCG";
             var dnaTemplate = "CATCTCAGTCCTACTAAACTCGCGAAGCTCATACTAGCTACTAAACCGCTAGACTGCATGATCGCATAGCTAGCTACGCT";
 
             // Tentar resolver com Regex:
-            string pattern = "^" + Regex.Escape(dnaGene) + "$";
-            bool isMatch = Regex.IsMatch(dnaTemplate, pattern, RegexOptions.IgnoreCase);
+            var match = Regex.Match(dnaTemplate, @"[ACGT]{" + dnaGene.Length + "}");
 
-            if (isMatch)
+            if (match.Success && match.Value == dnaGene)
             {
-                Console.WriteLine("As strings são semelhantes!");
+                Console.WriteLine("DNA gene found in DNA template!");
+
+                // Calcular a porcentagem de correspondência entre a sequência de DNA e o template
+                float percentMatch = ((float)dnaGene.Length / (float)dnaTemplate.Length) * 100;
+                Console.WriteLine("Percentagem de correspondência: " + percentMatch + "%");
             }
             else
             {
-                Console.WriteLine("As strings não são semelhantes!");
+                Console.WriteLine("DNA gene not found in DNA template.");
             }
         }
+
 
         private static async Task<CreateUserResponse> CreateUser(string username, string email, string password)
         {
@@ -360,6 +426,57 @@ namespace Consumo_Api_Lacuna_Genetics
     }
 }
 
+//main
+//// Adicionar o cabeçalho de autorização no cliente HTTP
+//client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+//// Codificar a sequência de DNA
+//var dnaSequence = "ATCGATCG"; // substitua pela sua sequência de nucleobases
+//var encoder = new DnaEncoder(dnaSequence);
+//var binarySequence = encoder.EncodeBinary();
+//var encodedString = encoder.EncodeString();
+
+//Console.WriteLine($"Binary sequence: {BitConverter.ToString(binarySequence)}");
+//Console.WriteLine($"Encoded string: {encodedString}");
+
+//var jobResponse = await client.GetAsync($"api/dna/jobs?type=EncodeStrand&Data={dnaSequence}");
+
+//try
+//{
+//    jobResponse.EnsureSuccessStatusCode();
+//}
+//catch (HttpRequestException ex)
+//{
+//    Console.WriteLine($"Error: {ex.Message}");
+//    return;
+//}
+
+//// Processar a resposta do trabalho
+//var jobResponseJson = await jobResponse.Content.ReadAsStringAsync();
+//var jobResponseObj = JsonConvert.DeserializeObject<JobResponse>(jobResponseJson);
+
+//if (jobResponseObj.Code != "Success")
+//{
+//    Console.WriteLine($"Failed to create job: {jobResponseObj.Message}");
+//    return;
+//}
+
+//var jobId = jobResponseObj.Job.Id;
+//var geneSequence = "TACCGCTTCATAAACCGCTAGACTGCATGATCGGG";
+//await CheckGene(client, jobId, geneSequence);
+
+//// Tentar resolver com Regex:
+//string pattern = "^" + Regex.Escape(dnaGene) + "$";
+//bool isMatch = Regex.IsMatch(dnaTemplate, pattern, RegexOptions.IgnoreCase);
+
+//if (isMatch)
+//{
+//    Console.WriteLine("As strings são semelhantes!");
+//}
+//else
+//{
+//    Console.WriteLine("As strings não são semelhantes!");
+//}
 
 
 

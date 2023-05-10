@@ -73,5 +73,34 @@ namespace Consumo_Api_Lacuna_Genetics.Class
 
             return nucleobases.ToString();
         }
+        //public static string InvertComplementary(string strand)
+        //{
+            
+
+        //    var complementaryStrand = new StringBuilder(strand.Length);
+
+        //    foreach (var nucleobase in strand)
+        //    {
+        //        switch (nucleobase)
+        //        {
+        //            case 'A':
+        //                complementaryStrand.Append('T');
+        //                break;
+        //            case 'T':
+        //                complementaryStrand.Append('A');
+        //                break;
+        //            case 'C':
+        //                complementaryStrand.Append('G');
+        //                break;
+        //            case 'G':
+        //                complementaryStrand.Append('C');
+        //                break;
+        //        }
+        //    }
+
+        //    return complementaryStrand.ToString();
+        //}
+        
+
     }
 }
