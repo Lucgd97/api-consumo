@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "edt7ughYDWW8+JI8v6DzN9YRARhC+SAi9dm7TnIClN2kVZdNZXndI5jxJ8u6mMPUWosgVLs0/UxmyLRSNTnQiA==",
+  "dgSpecHash": "PebDdbpZA1DyOCyeyUQL8V7t/Dw7ekDk02yYP0375FUwkzIN036L/ZfFdTQr0pa04/6tYwroutkKYABi71h/fA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lucas\\OneDrive\\Área de Trabalho\\Alura\\C# Danilo\\Conusmo Api\\api-consumo-main-cristovao\\api-consumo-main\\Consumo-Api-Lacuna-Genetics.csproj",
+  "projectFilePath": "C:\\Users\\lucas\\OneDrive\\Área de Trabalho\\Alura\\C# Danilo\\Conusmo Api\\Consumo-Api-Lacuna-Genetics\\Consumo-Api-Lacuna-Genetics.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lucas\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],

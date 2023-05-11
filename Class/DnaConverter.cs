@@ -57,50 +57,21 @@ namespace Consumo_Api_Lacuna_Genetics.Class
                 switch (binaryNucleobase)
                 {
                     case "00":
-                        nucleobases.Append("A");
+                        nucleobases.Append('A');
                         break;
                     case "01":
-                        nucleobases.Append("C");
+                        nucleobases.Append('C');
                         break;
                     case "10":
-                        nucleobases.Append("G");
+                        nucleobases.Append('G');
                         break;
                     case "11":
-                        nucleobases.Append("T");
+                        nucleobases.Append('T');
                         break;
                 }
             }
 
             return nucleobases.ToString();
         }
-        //public static string InvertComplementary(string strand)
-        //{
-            
-
-        //    var complementaryStrand = new StringBuilder(strand.Length);
-
-        //    foreach (var nucleobase in strand)
-        //    {
-        //        switch (nucleobase)
-        //        {
-        //            case 'A':
-        //                complementaryStrand.Append('T');
-        //                break;
-        //            case 'T':
-        //                complementaryStrand.Append('A');
-        //                break;
-        //            case 'C':
-        //                complementaryStrand.Append('G');
-        //                break;
-        //            case 'G':
-        //                complementaryStrand.Append('C');
-        //                break;
-        //        }
-        //    }
-
-        //    return complementaryStrand.ToString();
-        //}
-        
-
     }
 }

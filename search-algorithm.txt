@@ -1,0 +1,59 @@
+Example:
+
+Gene:
+TACCGCTTCATAAACCGCTAGACTGCATGATCGGGT
+
+DNA template strand:
+CATCTCAGTCCTACTAAACTCGCGAAGCTCATACTAGCTACTAAACCGCTAGACTGCATGATCGCATAGCTAGCTACGCT
+
+
+TAC => SearchInitialPosition: 0, FoundInitialPosition: 12, 3 <=====
+TACC Not
+=> SearchInitialPosition++, 1, 4
+ACCG => SearchInitialPosition: 1, FoundInitialPosition: 45, 4
+ACCGC => SearchInitialPosition: 1, FoundInitialPosition: 45, 5
+ACCGCT => SearchInitialPosition: 1, FoundInitialPosition: 45, 6 <=====
+ACCGCTT Not
+=> SearchInitialPosition++, 2, 7
+CCGCTTC Not
+=> SearchInitialPosition++, 3, 7
+CGCTTCA
+=> SearchInitialPosition++, 4, 7
+GCTTCAT
+=> SearchInitialPosition++, 5, 7
+CTTCATA
+=> SearchInitialPosition++, 6, 7
+TTCATAA
+=> SearchInitialPosition++, 7, 7
+TCATAAA
+=> SearchInitialPosition++, 8, 7
+CATAAAC
+=> SearchInitialPosition++, 9, 7
+ATAAACC
+=> SearchInitialPosition++, 10, 7
+TAAACCG => SearchInitialPosition: 10, FoundInitialPosition: 42, 7
+TAAACCGC => SearchInitialPosition: 10, FoundInitialPosition: 42, 8
+TAAACCGCT => SearchInitialPosition: 10, FoundInitialPosition: 42, 9
+TAAACCGCTA => SearchInitialPosition: 10, FoundInitialPosition: 42, 10
+TAAACCGCTAG => SearchInitialPosition: 10, FoundInitialPosition: 42, 11
+TAAACCGCTAGA => SearchInitialPosition: 10, FoundInitialPosition: 42, 12
+TAAACCGCTAGAC => SearchInitialPosition: 10, FoundInitialPosition: 42, 13
+TAAACCGCTAGACT => SearchInitialPosition: 10, FoundInitialPosition: 42, 14
+TAAACCGCTAGACTG => SearchInitialPosition: 10, FoundInitialPosition: 42, 15
+TAAACCGCTAGACTGC => SearchInitialPosition: 10, FoundInitialPosition: 42, 16
+TAAACCGCTAGACTGCA => SearchInitialPosition: 10, FoundInitialPosition: 42, 17
+TAAACCGCTAGACTGCAT => SearchInitialPosition: 10, FoundInitialPosition: 42, 18
+TAAACCGCTAGACTGCATG => SearchInitialPosition: 10, FoundInitialPosition: 42, 19
+TAAACCGCTAGACTGCATGA => SearchInitialPosition: 10, FoundInitialPosition: 42, 20
+TAAACCGCTAGACTGCATGAT => SearchInitialPosition: 10, FoundInitialPosition: 42, 21
+TAAACCGCTAGACTGCATGATC => SearchInitialPosition: 10, FoundInitialPosition: 42, 22
+TAAACCGCTAGACTGCATGATCG => SearchInitialPosition: 10, FoundInitialPosition: 42, 23 <=====
+TAAACCGCTAGACTGCATGATCGG
+=> SearchInitialPosition++, 11, 23
+AAACCGCTAGACTGCATGATCGG
+=> SearchInitialPosition++, 12, 23
+AACCGCTAGACTGCATGATCGGG
+=> SearchInitialPosition++, 13, 23
+ACCGCTAGACTGCATGATCGGGT
+=> SearchInitialPosition++, 14, 23 > 36, Parar
+
